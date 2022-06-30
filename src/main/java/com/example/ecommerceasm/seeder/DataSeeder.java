@@ -18,7 +18,7 @@ import java.util.UUID;
 @Component
 public class DataSeeder implements CommandLineRunner {
 
-    boolean createSeedData = true;
+    boolean createSeedData = false;
     final ProductRepository productRepository;
     final CateRepository cateRepository;
     Faker faker;

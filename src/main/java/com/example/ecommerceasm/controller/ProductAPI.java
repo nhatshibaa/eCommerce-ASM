@@ -2,6 +2,7 @@ package com.example.ecommerceasm.controller;
 
 import com.example.ecommerceasm.entity.Product;
 import com.example.ecommerceasm.service.ProductService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/products")
 @CrossOrigin(origins = "*")
+@Log4j2
 public class ProductAPI {
     @Autowired
     ProductService productService;
@@ -22,12 +24,20 @@ public class ProductAPI {
         return ResponseEntity.ok(productService.save(product));
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "all")
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(productService.findAll());
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> findAll(
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "limit", defaultValue = "10") int limit) {
-        return ResponseEntity.ok(productService.findAll(PageRequest.of(page - 1, limit))
-        );
+        try {
+            return ResponseEntity.ok(productService.findAll(PageRequest.of(page - 1, limit)));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "{id}")

@@ -23,6 +23,9 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
+    public List<Product> findAll(){
+        return productRepository.findAll();
+    }
 
     public Product save (Product product){
         return productRepository.save(product);
