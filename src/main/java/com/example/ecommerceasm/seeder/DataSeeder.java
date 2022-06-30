@@ -9,7 +9,6 @@ import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -61,7 +60,7 @@ public class DataSeeder implements CommandLineRunner {
             product.setName(faker.commerce().productName());
             product.setDescription(faker.lorem().sentence());
             product.setPrice(faker.number().numberBetween(100, 200) * 10000);
-            product.setCateId(categories.get(random.nextInt(categories.size())));
+            product.setCategory(categories.get(random.nextInt(categories.size())));
             product.setDetail(faker.lorem().sentence());
             product.setThumbnails(faker.avatar().image());
             product.setStatus(ProductStatus.AVAILABLE);

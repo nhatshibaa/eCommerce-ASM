@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,6 +35,7 @@ public class ProductAPI {
         try {
             return ResponseEntity.ok(productService.findAll(PageRequest.of(page - 1, limit)));
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -58,7 +58,7 @@ public class ProductAPI {
         Product existProduct = optionalProduct.get();
         // map object
         existProduct.setName(product.getName());
-        existProduct.setCateId(product.getCateId());
+        existProduct.setCategory(product.getCategory());
         existProduct.setPrice(product.getPrice());
         existProduct.setDescription(product.getDescription());
         return ResponseEntity.ok(productService.save(existProduct));

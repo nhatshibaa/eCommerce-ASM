@@ -1,13 +1,9 @@
 package com.example.ecommerceasm.entity;
 
 import com.example.ecommerceasm.enums.ProductStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -32,5 +28,5 @@ public class Product extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "cate_id", referencedColumnName = "id", nullable = false)
-    private Category cateId;
+    private Category category;
 }

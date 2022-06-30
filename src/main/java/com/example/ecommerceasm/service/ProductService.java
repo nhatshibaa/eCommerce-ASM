@@ -19,19 +19,19 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public Optional<Product> findById (String id){
+    public Optional<Product> findById(String id) {
         return productRepository.findById(id);
     }
 
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
 
-    public Product save (Product product){
+    public Product save(Product product) {
         return productRepository.save(product);
     }
 
-    public void delete (String id){
+    public void delete(String id) {
         productRepository.deleteById(id);
     }
 
@@ -39,10 +39,10 @@ public class ProductService {
         Map<String, Object> responses = new HashMap<>();
         Page<Product> pageTu = productRepository.findAll(pageable);
         List<Product> list = pageTu.getContent();
-        responses.put("content",list); // chi tiết các phần tử được
-        responses.put("currentPage",pageTu.getNumber() + 1);// trang hiện tại
-        responses.put("totalItems",pageTu.getTotalElements());// tổng số phàn tử
-        responses.put("totalPage",pageTu.getTotalPages()); // tổng só trang
+        responses.put("content", list); // chi tiết các phần tử được
+        responses.put("currentPage", pageTu.getNumber() + 1);// trang hiện tại
+        responses.put("totalItems", pageTu.getTotalElements());// tổng số phàn tử
+        responses.put("totalPage", pageTu.getTotalPages()); // tổng só trang
         return responses;
     }
 
