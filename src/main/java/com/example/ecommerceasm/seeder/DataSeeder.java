@@ -9,6 +9,7 @@ import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -56,14 +57,15 @@ public class DataSeeder implements CommandLineRunner {
         List<Category> categories = cateRepository.findAll();
         for (int i = 0; i < numberOfProduct; i++) {
             Product product = new Product();
-            product.setId(UUID.randomUUID().toString());
-            product.setName(faker.commerce().productName());
-            product.setDescription(faker.lorem().sentence());
-            product.setPrice(faker.number().numberBetween(100, 200) * 10000);
+            product.setName(faker.funnyName().name());
+            product.setDescription(faker.lorem().paragraph());
+            product.setQuantity(faker.number().numberBetween(10, 100));
+            product.setPrice(faker.number().numberBetween(50, 200) * 10000);
             product.setCategory(categories.get(random.nextInt(categories.size())));
-            product.setDetail(faker.lorem().sentence());
+            product.setDetail(faker.lorem().paragraph());
             product.setThumbnails(faker.avatar().image());
             product.setStatus(ProductStatus.AVAILABLE);
+            product.setCreatedAt(LocalDateTime.now());
             listProduct.add(product);
         }
         productRepository.saveAll(listProduct);

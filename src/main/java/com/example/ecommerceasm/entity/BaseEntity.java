@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class BaseEntity {
     @CreatedDate
-    private LocalDateTime createdAt;
+    public LocalDateTime createdAt;
     @LastModifiedDate
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
-    private String createdBy;
-    private String updatedBy;
-    private String deletedBy;
+    public LocalDateTime updatedAt;
+    public LocalDateTime deletedAt;
+    public String createdBy;
+    public String updatedBy;
+    public String deletedBy;
 }

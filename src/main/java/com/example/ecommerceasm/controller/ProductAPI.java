@@ -23,13 +23,8 @@ public class ProductAPI {
         return ResponseEntity.ok(productService.save(product));
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "all")
-    public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(productService.findAll());
-    }
-
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> findAll(
+    public ResponseEntity<?> findAllBy(
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "limit", defaultValue = "10") int limit) {
         try {
@@ -41,7 +36,7 @@ public class ProductAPI {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
-    public ResponseEntity<?> getDetail(@PathVariable String id) {
+    public ResponseEntity<?> getDetail(@PathVariable int id) {
         Optional<Product> optionalProduct = productService.findById(id);
         if (!optionalProduct.isPresent()) {
             ResponseEntity.badRequest().build();
@@ -50,7 +45,7 @@ public class ProductAPI {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "{id}")
-    public ResponseEntity<Product> update(@PathVariable String id, @RequestBody Product product) {
+    public ResponseEntity<Product> update(@PathVariable int id, @RequestBody Product product) {
         Optional<Product> optionalProduct = productService.findById(id);
         if (!optionalProduct.isPresent()) {
             ResponseEntity.badRequest().build();
@@ -61,6 +56,13 @@ public class ProductAPI {
         existProduct.setCategory(product.getCategory());
         existProduct.setPrice(product.getPrice());
         existProduct.setDescription(product.getDescription());
+        existProduct.setDetail(product.getDetail());
         return ResponseEntity.ok(productService.save(existProduct));
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, path = "{id}")
+    public boolean delete(@PathVariable String id) {
+
+        return true;
     }
 }

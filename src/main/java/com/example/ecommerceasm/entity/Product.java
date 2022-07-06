@@ -14,7 +14,8 @@ import javax.persistence.*;
 @Table(name = "products")
 public class Product extends BaseEntity{
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
     @Column(columnDefinition = "TEXT")
     private String description;
