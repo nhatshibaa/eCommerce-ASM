@@ -24,7 +24,7 @@ public class ProductAPI {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> findAllBy(
+    public ResponseEntity<?> findAll(
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "limit", defaultValue = "10") int limit) {
         try {
@@ -61,8 +61,7 @@ public class ProductAPI {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "{id}")
-    public boolean delete(@PathVariable String id) {
-
-        return true;
+    public void delete(@PathVariable Integer id) {
+        productService.delete(id);
     }
 }

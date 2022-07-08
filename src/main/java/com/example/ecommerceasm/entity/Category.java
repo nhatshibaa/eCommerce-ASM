@@ -15,6 +15,6 @@ import javax.persistence.Table;
 @Table(name = "categories")
 public class Category extends BaseEntity{
     @Id
-    private int id;
+    private Integer id;
     private String name;
 }

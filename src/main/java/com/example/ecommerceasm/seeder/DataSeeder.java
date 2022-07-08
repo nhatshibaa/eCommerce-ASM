@@ -60,7 +60,7 @@ public class DataSeeder implements CommandLineRunner {
             product.setName(faker.funnyName().name());
             product.setDescription(faker.lorem().paragraph());
             product.setQuantity(faker.number().numberBetween(10, 100));
-            product.setPrice(faker.number().numberBetween(50, 200) * 10000);
+            product.setPrice(faker.number().numberBetween(50, 200) * 1000);
             product.setCategory(categories.get(random.nextInt(categories.size())));
             product.setDetail(faker.lorem().paragraph());
             product.setThumbnails(faker.avatar().image());

@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchBody {
+public class OrderSearchBody {
     private int page;
     private int limit;
     private String userId;
@@ -125,24 +125,24 @@ public class SearchBody {
             return this;
         }
 
-        public SearchBody build() {
-            SearchBody searchBody = new SearchBody();
-            searchBody.setPage(page);
-            searchBody.setLimit(limit);
-            searchBody.setUserId(userId);
-            searchBody.setProductId(productId);
-            searchBody.setNameProduct(nameProduct);
-            searchBody.setNameUser(nameUser);
-            searchBody.setPhone(phone);
-            searchBody.setCity(city);
-            searchBody.setDistrict(district);
-            searchBody.setWard(ward);
-            searchBody.setCateId(cateId);
-            searchBody.setSort(sort);
-            searchBody.setStart(start);
-            searchBody.setEnd(end);
-            searchBody.setStatus(status);
-            return searchBody;
+        public OrderSearchBody build() {
+            OrderSearchBody orderSearchBody = new OrderSearchBody();
+            orderSearchBody.setPage(page);
+            orderSearchBody.setLimit(limit);
+            orderSearchBody.setUserId(userId);
+            orderSearchBody.setProductId(productId);
+            orderSearchBody.setNameProduct(nameProduct);
+            orderSearchBody.setNameUser(nameUser);
+            orderSearchBody.setPhone(phone);
+            orderSearchBody.setCity(city);
+            orderSearchBody.setDistrict(district);
+            orderSearchBody.setWard(ward);
+            orderSearchBody.setCateId(cateId);
+            orderSearchBody.setSort(sort);
+            orderSearchBody.setStart(start);
+            orderSearchBody.setEnd(end);
+            orderSearchBody.setStatus(status);
+            return orderSearchBody;
         }
     }
 }

@@ -1,32 +1,29 @@
 package com.example.ecommerceasm.entity.cart;
 
-import com.example.ecommerceasm.entity.OrderDetail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShoppingCart {
+public class ShoppingCartDTO {
     private String userId;
 //    private String shipName;
 //    private String shipPhone;
 //    private String shipAddress;
 //    private String shipNote;
     private Integer totalPrice;
-    private Set<CartItem> items;
+    private Set<CartItemDTO> items;
 
-    public void addTotalPrice(CartItem cartItem) {
+    public void addTotalPrice(CartItemDTO cartItemDTO) {
         if(this.totalPrice == null){
             this.totalPrice = 0;
         }
-        this.totalPrice += (cartItem.getUnitPrice() * cartItem.getQuantity());
+        this.totalPrice += (cartItemDTO.getUnitPrice() * cartItemDTO.getQuantity());
     }
 }

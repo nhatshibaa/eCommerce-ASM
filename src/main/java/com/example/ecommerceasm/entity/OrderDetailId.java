@@ -18,6 +18,6 @@ public class OrderDetailId implements Serializable {
     private Integer orderId;
 
     @Column(name = "product_id")
-    private int productId;
+    private Integer productId;
 
 }

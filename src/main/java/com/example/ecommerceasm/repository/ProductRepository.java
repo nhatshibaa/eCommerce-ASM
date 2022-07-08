@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> , JpaSpecificationExecutor<Product> {
     List<Product> findByName(String name);
     Page<Product> findByNameContaining(Pageable pageable, String name);

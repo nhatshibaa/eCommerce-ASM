@@ -9,8 +9,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItem {
-    private Integer productId;
-    private Integer unitPrice;
+public class ProductDTO {
+    private Integer id;
+    private String name;
     private Integer quantity;
+    private Integer price;
+    private Integer status;
 }

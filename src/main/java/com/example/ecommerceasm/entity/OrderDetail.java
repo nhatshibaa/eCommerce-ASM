@@ -30,7 +30,7 @@ public class OrderDetail {
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     @JsonBackReference
     private Product product;
-    // thông tin thêm.
+
     private Integer quantity;
     private Integer unitPrice;
 }
