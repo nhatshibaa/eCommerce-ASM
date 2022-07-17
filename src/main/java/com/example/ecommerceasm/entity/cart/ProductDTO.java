@@ -1,18 +1,24 @@
 package com.example.ecommerceasm.entity.cart;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.math.BigDecimal;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductDTO {
-    private Integer id;
+    private String id;
     private String name;
+    private String slug;
     private Integer quantity;
-    private Integer price;
-    private Integer status;
+    private String description;
+    private String detail;
+    private String thumbnails;
+    private String createdAt;
+    private String updatedAt;
+    private double price;
+    private String status;
 }

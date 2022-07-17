@@ -12,10 +12,12 @@ import lombok.Setter;
 public class OrderSearchBody {
     private int page;
     private int limit;
+    private String orderId;
     private String userId;
     private String productId;
     private String nameProduct;
     private String nameUser;
+    private String email;
     private String phone;
     private String city;
     private String district;
@@ -26,13 +28,16 @@ public class OrderSearchBody {
     private String end;
     private String status;
 
-    public static final class SearchBodyBuilder {
+
+    public static final class OrderSearchBodyBuilder {
         private int page;
         private int limit;
+        private String orderId;
         private String userId;
         private String productId;
         private String nameProduct;
         private String nameUser;
+        private String email;
         private String phone;
         private String city;
         private String district;
@@ -43,84 +48,94 @@ public class OrderSearchBody {
         private String end;
         private String status;
 
-        private SearchBodyBuilder() {
+        private OrderSearchBodyBuilder() {
         }
 
-        public static SearchBodyBuilder aSearchBody() {
-            return new SearchBodyBuilder();
+        public static OrderSearchBodyBuilder anOrderSearchBody() {
+            return new OrderSearchBodyBuilder();
         }
 
-        public SearchBodyBuilder withPage(int page) {
+        public OrderSearchBodyBuilder withPage(int page) {
             this.page = page;
             return this;
         }
 
-        public SearchBodyBuilder withLimit(int limit) {
+        public OrderSearchBodyBuilder withLimit(int limit) {
             this.limit = limit;
             return this;
         }
 
-        public SearchBodyBuilder withUserId(String userId) {
+        public OrderSearchBodyBuilder withOrderId(String orderId) {
+            this.orderId = orderId;
+            return this;
+        }
+
+        public OrderSearchBodyBuilder withUserId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        public SearchBodyBuilder withProductId(String productId) {
+        public OrderSearchBodyBuilder withProductId(String productId) {
             this.productId = productId;
             return this;
         }
 
-        public SearchBodyBuilder withNameProduct(String nameProduct) {
+        public OrderSearchBodyBuilder withNameProduct(String nameProduct) {
             this.nameProduct = nameProduct;
             return this;
         }
 
-        public SearchBodyBuilder withNameUser(String nameUser) {
+        public OrderSearchBodyBuilder withNameUser(String nameUser) {
             this.nameUser = nameUser;
             return this;
         }
 
-        public SearchBodyBuilder withPhone(String phone) {
+        public OrderSearchBodyBuilder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public OrderSearchBodyBuilder withPhone(String phone) {
             this.phone = phone;
             return this;
         }
 
-        public SearchBodyBuilder withCity(String city) {
+        public OrderSearchBodyBuilder withCity(String city) {
             this.city = city;
             return this;
         }
 
-        public SearchBodyBuilder withDistrict(String district) {
+        public OrderSearchBodyBuilder withDistrict(String district) {
             this.district = district;
             return this;
         }
 
-        public SearchBodyBuilder withWard(String ward) {
+        public OrderSearchBodyBuilder withWard(String ward) {
             this.ward = ward;
             return this;
         }
 
-        public SearchBodyBuilder withCateId(String cateId) {
+        public OrderSearchBodyBuilder withCateId(String cateId) {
             this.cateId = cateId;
             return this;
         }
 
-        public SearchBodyBuilder withSort(String sort) {
+        public OrderSearchBodyBuilder withSort(String sort) {
             this.sort = sort;
             return this;
         }
 
-        public SearchBodyBuilder withStart(String start) {
+        public OrderSearchBodyBuilder withStart(String start) {
             this.start = start;
             return this;
         }
 
-        public SearchBodyBuilder withEnd(String end) {
+        public OrderSearchBodyBuilder withEnd(String end) {
             this.end = end;
             return this;
         }
 
-        public SearchBodyBuilder withStatus(String status) {
+        public OrderSearchBodyBuilder withStatus(String status) {
             this.status = status;
             return this;
         }
@@ -129,10 +144,12 @@ public class OrderSearchBody {
             OrderSearchBody orderSearchBody = new OrderSearchBody();
             orderSearchBody.setPage(page);
             orderSearchBody.setLimit(limit);
+            orderSearchBody.setOrderId(orderId);
             orderSearchBody.setUserId(userId);
             orderSearchBody.setProductId(productId);
             orderSearchBody.setNameProduct(nameProduct);
             orderSearchBody.setNameUser(nameUser);
+            orderSearchBody.setEmail(email);
             orderSearchBody.setPhone(phone);
             orderSearchBody.setCity(city);
             orderSearchBody.setDistrict(district);

@@ -30,16 +30,16 @@ public class UserAPI {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
-    public ResponseEntity<?> getDetail(@PathVariable int id) {
+    public User getDetail(@PathVariable String id) {
         Optional<User> optionalUser = userService.findById(id);
         if (!optionalUser.isPresent()) {
             ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(optionalUser.get());
+        return optionalUser.get();
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "{id}")
-    public void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable String id) {
         userService.delete(id);
     }
 }

@@ -23,15 +23,13 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        ApiAuthenticationFilter apiAuthenticationFilter = new ApiAuthenticationFilter(authenticationManagerBean());
-        apiAuthenticationFilter.setFilterProcessesUrl("/api/v1/login");
         http.authorizeRequests()
                 .antMatchers(
                         "/api/v1/products",
                         "api/v1/login",
                         "api/v1/register",
-                        "/api/v1/account/login",
-                        "/api/v1/account/register")
+                        "/api/v1/accounts/login",
+                        "/api/v1/accounts/register")
                 .permitAll();
         http.cors().and().csrf().disable();
         http.authorizeRequests()
@@ -41,7 +39,6 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/admin**")
                 .hasAnyAuthority(
                         "ADMIN");
-        http.addFilter(apiAuthenticationFilter);
         http.addFilterBefore(new ApiAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 

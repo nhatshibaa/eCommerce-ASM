@@ -1,10 +1,7 @@
 package com.example.ecommerceasm.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,6 +10,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "order_details")
 public class OrderDetail {
@@ -32,5 +30,5 @@ public class OrderDetail {
     private Product product;
 
     private Integer quantity;
-    private Integer unitPrice;
+    private BigDecimal unitPrice;
 }

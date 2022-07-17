@@ -29,11 +29,11 @@ public class UserService {
         responses.put("totalPage", pageTotal.getTotalPages());
         return responses;
     }
-    public Optional<User> findById(int id) {
+    public Optional<User> findById(String id) {
         return userRepository.findById(id);
     }
 
-    public void delete(int id) {
+    public void delete(String id) {
         userRepository.deleteById(id);
     }
 }

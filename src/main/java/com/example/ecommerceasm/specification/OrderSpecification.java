@@ -10,8 +10,13 @@ import org.springframework.data.jpa.domain.Specification;
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
 
+
 public class OrderSpecification implements Specification<Order> {
-    SearchCriteria criteria;
+    private SearchCriteria criteria;
+
+    public OrderSpecification(SearchCriteria criteria) {
+        this.criteria = criteria;
+    }
 
     @Override
     public Predicate toPredicate(Root<Order> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
@@ -53,21 +58,32 @@ public class OrderSpecification implements Specification<Order> {
                 }
             case JOIN_DETAIL_PRODUCT:
                 Join<OrderDetail, Product> orderDetailProductJoin = root.join("orderDetails").join("product");
-                Predicate predicate = criteriaBuilder.like(
-                        orderDetailProductJoin.get(criteria.getKey()), "%" + criteria.getValue() + "%"
-                );
+                Predicate predicate = criteriaBuilder.or(
+                        criteriaBuilder.like(root.get("id"), "%" + criteria.getValue() + "%"),
+                        criteriaBuilder.like(
+                                orderDetailProductJoin.get(criteria.getKey()), "%" + criteria.getValue() + "%"
+                        ));
                 return predicate;
 
             case JOIN_USER:
-                From<Order, User> orderOrderCustomerJoin = root.join("customer");
+                From<Order, User> orderUserJoin = root.join("user");
                 Predicate predicateOrderCustomer = criteriaBuilder.like(
                         // hoặc tìm trong bảng customer bản ghi có name giống với giá trị
-                        orderOrderCustomerJoin.get(criteria.getKey()), "%" + criteria.getValue() + "%"
+                        orderUserJoin.get(criteria.getKey()), "%" + criteria.getValue() + "%"
                 );
-                return criteriaBuilder.like(
-                        // hoặc tìm trong bảng customer bản ghi có name giống với giá trị
-                        orderOrderCustomerJoin.get(criteria.getKey()), "%" + criteria.getValue() + "%"
-                );
+//                return criteriaBuilder.like(
+//                        // hoặc tìm trong bảng customer bản ghi có name giống với giá trị
+//                        orderUserJoin.get(criteria.getKey()), "%" + criteria.getValue() + "%"
+//                );
+//            case JOIN:
+//                Join<OrderDetail, Product> orderDetailProductJoin1 = root.join("orderDetails").join("product");
+//                Predicate predicate1 = criteriaBuilder.or(
+//                        // tìm trong order bản ghi có id giống giá trị truyền vào
+//                        criteriaBuilder.like(root.get("id"), "%" + criteria.getValue() + "%"),
+//                        // hoặc tìm trong bảng product bản ghi có name giống với giá trị
+//                        criteriaBuilder.like(orderDetailProductJoin1.get("name"), "%" + criteria.getValue() + "%")
+//                );
+//                return predicate1;
         }
         return null;
     }

@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class ApiAuthorizationFilter extends OncePerRequestFilter {
-    private static final String[] IGNORE_PATH = {"/api/v1/login", "/api/v1/register", "/api/v1/products"};
+    private static final String[] IGNORE_PATH = {"/api/v1/accounts/login", "/api/v1/accounts/register", "/api/v1/products"};
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

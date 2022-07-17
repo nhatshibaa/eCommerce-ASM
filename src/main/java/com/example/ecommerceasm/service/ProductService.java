@@ -22,7 +22,7 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public Optional<Product> findById(int id) {
+    public Optional<Product> findById(String id) {
         return productRepository.findById(id);
     }
 
@@ -30,7 +30,7 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public void delete(int id) {
+    public void delete(String id) {
         productRepository.deleteById(id);
     }
 

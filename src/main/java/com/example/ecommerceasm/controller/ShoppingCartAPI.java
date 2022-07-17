@@ -1,13 +1,11 @@
 package com.example.ecommerceasm.controller;
 
-import com.example.ecommerceasm.entity.Order;
-import com.example.ecommerceasm.entity.OrderDetail;
-import com.example.ecommerceasm.entity.OrderDetailId;
-import com.example.ecommerceasm.entity.Product;
+import com.example.ecommerceasm.entity.*;
 import com.example.ecommerceasm.entity.cart.CartItemDTO;
 import com.example.ecommerceasm.entity.cart.ShoppingCartDTO;
 import com.example.ecommerceasm.enums.OrderStatus;
 import com.example.ecommerceasm.repository.ProductRepository;
+import com.example.ecommerceasm.repository.ShoppingCartRepository;
 import com.example.ecommerceasm.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,58 +13,64 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/shopping-cart")
 @CrossOrigin(origins = "*")
 public class ShoppingCartAPI {
     @Autowired
-    OrderService orderService;
-    @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    ShoppingCartRepository shoppingCartRepository;
+
     @RequestMapping(method = RequestMethod.POST, path = "add")
-    public ResponseEntity<?> addToCart(@RequestBody ShoppingCartDTO shoppingCartDTO) {
-        try {
-            for (CartItemDTO cartItemDTO :
-                    shoppingCartDTO.getItems()) {
-                shoppingCartDTO.addTotalPrice(cartItemDTO);
+    public void saveCart(@RequestParam String userId, @RequestBody ShoppingCartDTO shoppingCartDTO){
+        boolean hasException = false;
+        ShoppingCart shoppingCart = ShoppingCart.builder()
+                .id(UUID.randomUUID().toString())
+                .userId(userId)
+                .shipName(shoppingCartDTO.getShipName())
+                .shipAddress(shoppingCartDTO.getShipAddress())
+                .shipNote(shoppingCartDTO.getShipNote())
+                .shipPhone(shoppingCartDTO.getShipPhone())
+                .build();
+        Set<CartItem> setCartItem = new HashSet<>();
+        System.out.println(shoppingCart.getId());
+        for (CartItemDTO cartItemDTO :
+                shoppingCartDTO.getItems()) {
+            Optional<Product> optionalProduct = productRepository.findById(cartItemDTO.getProductId());
+            if(!optionalProduct.isPresent()){
+                hasException = true;
+                break;
             }
+            Product product = optionalProduct.get();
+            CartItem cartItem = CartItem.builder()
+                    .id(new CartItemId(shoppingCart.getId(), product.getId()))
+                    .productName(product.getName())
+                    .productImage(product.getThumbnails())
+                    .quantity(cartItemDTO.getQuantity())
+                    .unitPrice(product.getPrice())
+                    .shoppingCart(shoppingCart)
+                    .build();
 
-            Order order = new Order();
-            order.setUserId(shoppingCartDTO.getUserId());
-            order.setTotalPrice(shoppingCartDTO.getTotalPrice());
-            order.setStatus(OrderStatus.PENDING);
-
-            Order orderSave = orderService.saveCart(order);
-            Set<OrderDetail> orderDetails = new HashSet<>();
-            for (CartItemDTO cartItemDTO : shoppingCartDTO.getItems()) {
-                OrderDetail orderDetail = new OrderDetail();
-                OrderDetailId orderDetailId = new OrderDetailId();
-                orderDetailId.setOrderId(orderSave.getId());
-                orderDetailId.setProductId(cartItemDTO.getProductId());
-
-                orderDetail.setId(orderDetailId);
-
-                Product product = productRepository.findById(cartItemDTO.getProductId()).orElse(null);
-                if (product == null) {
-                    return new ResponseEntity("Product not found", HttpStatus.BAD_REQUEST);
-                }
-                orderDetail.setOrder(orderSave);
-                orderDetail.setProduct(product);
-
-                orderDetail.setQuantity(cartItemDTO.getQuantity());
-                orderDetail.setUnitPrice(cartItemDTO.getUnitPrice());
-                orderDetails.add(orderDetail);
-            }
-
-            order.setOrderDetails(orderDetails);
-            Order orderCheckSave = orderService.saveCart(order);
-            return ResponseEntity.ok(orderService.saveCart(orderCheckSave));
-        } catch (Exception e) {
-            e.printStackTrace();
+            shoppingCart.addTotalPrice(cartItem); // add tổng giá bigdecimal
+            setCartItem.add(cartItem);
         }
-        return new ResponseEntity("Success", HttpStatus.OK);
+        shoppingCart.setItems(setCartItem);
+        shoppingCartRepository.save(shoppingCart);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "orders")
+    public void order(@RequestParam String shoppingCartId){
+        Optional<ShoppingCart> shoppingCart = shoppingCartRepository.findById(shoppingCartId);
+        if (shoppingCart.isPresent()){
+            ShoppingCart shoppingCart1 = shoppingCart.get();
+            shoppingCart1.setShoppingCart(false);
+            shoppingCartRepository.save(shoppingCart1);
+        }
     }
 }
